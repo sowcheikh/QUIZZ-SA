@@ -16,7 +16,7 @@ var j = 1;
         newInput.innerHTML = `
         <div class="form-group">
         <label for="inputEmail3" class="my-1 mr-5">Réponse </label>
-        <textarea class="form-control" id="textarea" rows="3"></textarea>
+        <textarea class="form-control" id="textarea" name="libelle_rep" rows="3"></textarea>
         <span class="form_error"></span><br />
         </div>
         `;
@@ -31,8 +31,8 @@ var j = 1;
         var newInput = document.createElement("div");
         newInput.setAttribute("id", "row_", +nbRow)
         newInput.setAttribute("class", "form-inline pt-2", +nbRow)
-        newInput.innerHTML = `<label for="rep" class="my-1 mr-5">Réponse numéro </label>
-        <input type="texte" class="form-control">
+        newInput.innerHTML = `<label for="rep" class="my-1 mr-5">Réponse numéro ${j} </label>
+        <input type="texte" id="texte_multiple" name="libelle_rep[${j}]" class="form-control">
         <input class="form-check-input m-3" type="checkbox" value="">
         <button type="button" class="btn btn-danger font-weight-bold" onclick="remove(${nbRow})"><svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -52,7 +52,7 @@ var j = 1;
         newInput.setAttribute("id", "row_", +nbRow)
         newInput.setAttribute("class", "form-inline pt-2", +nbRow)
         newInput.innerHTML = `<label for="rep" class="my-1 mr-4">Réponse numéro </label>
-        <input type="texte" class="form-control">
+        <input type="texte" id="texte_simple" name="libelle_rep[${i}]" class="form-control">
         <input class="form-check-input m-3" type="radio" name="radio" value="option1">        
         <button type="button" class="btn btn-danger font-weight-bold" onclick="remove(${nbRow})"><svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -69,7 +69,7 @@ var j = 1;
        target.remove();
     }
     function add(){
-        var type = document.getElementById("typeRep");
+        var type = document.getElementById("type");
         if (type.value == 'multiple') {
             return addIputMultiple();
         } else if (type.value == 'simple') {
@@ -98,40 +98,33 @@ var j = 1;
         }   
      
         $("#form").submit(function(event) {
-            var res = check_form("typeRep", /^[A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]{3,}/,"Champ vide", "choisir un type, type de réponse");
-            res = check_form("number", /^[1-9]$/i,"Champ vide", "nombre doit supérieur ou égale à 1 !") && res;
-            res = check_form("textarea", /./ ,"Champ vide", "") && res;
+            var res = check_form("type", /^[A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]{3,}/,"Champ vide", "choisir un type, type de réponse");
+            res = check_form("nbr_points", /^[1-9]$/i,"Champ vide", "nombre doit supérieur ou égale à 1 !") && res;
+            res = check_form("libelle", /./ ,"Champ vide", "") && res;
             return res;
         });
     });
+//ajax question
+   $("#form").submit(function(e){ // On sélectionne le formulaire par son identifiant
+    e.preventDefault(); // Le navigateur ne peut pas envoyer le formulaire
 
-    //ajax question
-$(document).ready(function(){
-    $("#enregistrer").click(function () {
-        $.ajax({
-            type: "POST",
-            url: "data/bd.php",
-            data: {
-            textarea: $('#textarea').val(),
-            number: $('#number').val(),
-            typeRep: $('#typeRep').val(),
-            },
-            dataType: "text",
-            success: function (data) {
-                
-                if (data === 'success') {
-                   // console.log(data);
-                   window.location.replace("")
-                } else {
-                    console.log(data);
-                    
-                }
-                
-            },
-            error:function(data) {
-                console.log(data);
-                
-            }
-        })
-    })
-    })
+    var donnees = $(this).serialize(); // On créer une variable content le formulaire sérialisé
+     
+    $.ajax({
+        type: "POST",
+          url: "data/qcm.php",
+          data: donnees,
+          dataType: "text",
+          success: function(data) {
+            console.log(data);
+            // window.location.replace("index.php?action=admin")
+          },
+          error: function(data) {
+            console.log('data');
+
+          }
+   
+    });
+
+});
+
