@@ -32,8 +32,8 @@ var j = 1;
         newInput.setAttribute("id", "row_", +nbRow)
         newInput.setAttribute("class", "form-inline pt-2", +nbRow)
         newInput.innerHTML = `<label for="rep" class="my-1 mr-5">Réponse numéro ${j} </label>
-        <input type="texte" id="texte_multiple" name="libelle_rep[${j}]" class="form-control">
-        <input class="form-check-input m-3" type="checkbox" value="">
+        <input type="texte" name="libelle_rep[${j}]" id="libelle_rep${j}" class="form-control">
+        <input class="form-check-input m-3" type="checkbox" id="rep_vrai" name="rep_vrai${j}" value="${j}">
         <button type="button" class="btn btn-danger font-weight-bold" onclick="remove(${nbRow})"><svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -51,9 +51,9 @@ var j = 1;
         var newInput = document.createElement("div");
         newInput.setAttribute("id", "row_", +nbRow)
         newInput.setAttribute("class", "form-inline pt-2", +nbRow)
-        newInput.innerHTML = `<label for="rep" class="my-1 mr-4">Réponse numéro </label>
-        <input type="texte" id="texte_simple" name="libelle_rep[${i}]" class="form-control">
-        <input class="form-check-input m-3" type="radio" name="radio" value="option1">        
+        newInput.innerHTML = `<label for="rep" class="my-1 mr-4">Réponse numéro ${i} </label>
+        <input type="texte" name="libelle_rep" id="${i}" class="form-control">
+        <input class="form-check-input m-3" type="radio" id="rep_vrai" name="rep_vrai" value="${i}">        
         <button type="button" class="btn btn-danger font-weight-bold" onclick="remove(${nbRow})"><svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -99,7 +99,7 @@ var j = 1;
      
         $("#form").submit(function(event) {
             var res = check_form("type", /^[A-Za-z0-9ÀÁÂÃÄÅàáâãäåÒÓÔÕÖØòóôõöøÈÉÊËèéêëÇçÌÍÎÏìíîïÙÚÛÜùúûüÿÑñ]{3,}/,"Champ vide", "choisir un type, type de réponse");
-            res = check_form("nbr_points", /^[1-9]$/i,"Champ vide", "nombre doit supérieur ou égale à 1 !") && res;
+            res = check_form("nbr_points", /^[1-9]$+/,"Champ vide", "nombre doit supérieur ou égale à 1 !") && res;
             res = check_form("libelle", /./ ,"Champ vide", "") && res;
             return res;
         });
@@ -117,7 +117,7 @@ var j = 1;
           dataType: "text",
           success: function(data) {
             console.log(data);
-            // window.location.replace("index.php?action=admin")
+            window.location.replace("")
           },
           error: function(data) {
             console.log('data');
@@ -125,6 +125,7 @@ var j = 1;
           }
    
     });
+    return false
 
 });
 

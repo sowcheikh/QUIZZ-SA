@@ -1,5 +1,5 @@
 <?php
- define("WEBROOT","http://localhost/QUIZZ-SA");
+ define("WEBROOT","quizzsadevdoc.alwaysdata.net");
    define("ACTION","action");
   require_once("./traitement/traitement.php");
   require_once("./data/bd.php");

@@ -15,7 +15,7 @@ if ($result == 0) {
     $q->execute([
     'name' => $_POST['name'],
     'login' => $_POST['login'],
-    'password' => $_POST['password'],
+    'password' => md5($_POST['password']),
     'profile' => 'admin',
     'score' => '',
     'statut' => 'actif',

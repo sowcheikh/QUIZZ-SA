@@ -3,14 +3,14 @@
             <form class="form-inline float-right mr-5" action="" method="post" id="f">
                 <div class="form-group">
                     <label for="nbr">Nombre de question / jeu</label>
-                    <input type="text" class="form-control bg-light " id="nbr" name="nbr" value="">
+                    <input type="text" class="form-control bg-light " id="nbr" name="nbr">
                 </div>
-                <button class="btn btn-warning" type="submit">OK</button>
+                <button class="btn btn-warning" id="btn" name="btn" type="button">OK</button>
             </form>
         </div>
     </div>
-<div class="col bg-light border rounded float-center overflow-auto">
-            <h4>1. les langages du Web ?</h4>
+<div class="col bg-light border rounded float-center overflow-auto" style="height: 300px;" id="chargement">
+            <!-- <h4>1. les langages du Web ?</h4>
             <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
             <label class="form-check-label" for="defaultCheck1">
@@ -65,5 +65,17 @@
             <li class="page-item"><a class="page-link" href="#">2</a></li>
             <li class="page-item"><a class="page-link" href="#">3</a></li>
             <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
-            </ul>
+            </ul> -->
+
         </div>
+
+<script>
+$.ajax({
+    url : "data/liste_qcm.php", //Request send to "action.php page"
+    method:"POST", //Using of Post method for send data
+    data:'', //action variable data has been send to server
+    success:function(data){
+     $('#chargement').html(data); //It will display data under div tag with id result
+    }
+   });
+</script>

@@ -2,7 +2,7 @@
 
 function connect_db(){
     $host ="localhost";
-    $db = "quizz";
+    $db = "quizzsa";
     $user ="root";
     $psswd ="";
     try{
@@ -19,7 +19,7 @@ function getUserConnexion($login,$password){
     $db = connect_db();
     
      $query = $db->prepare("SELECT * FROM users WHERE login=:login AND password=:password");
-     $query->execute(array('login'=>$login, 'password'=>$password));
+     $query->execute(array('login'=>$login, 'password'=>md5($password)));
         return $query;
   
     }catch(PDOException $e){
@@ -41,7 +41,7 @@ if(isset($_POST["action"])) //Check value of $_POST["action"] variable value is 
  //For Load All Data
  if($_POST["action"] == "Load") 
  {
-  $statement = $db->prepare("SELECT * FROM users ORDER BY score DESC");
+  $statement = $db->prepare("SELECT * FROM users WHERE profile='joueur' ORDER BY score DESC");
   $statement->execute();
   $result = $statement->fetchAll();
   $output = '';

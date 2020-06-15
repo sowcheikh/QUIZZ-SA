@@ -18,7 +18,7 @@ $(document).ready(function(){
                 
                 if (data === 'success') {
                    // console.log(data);
-                   window.location.replace("index.php?action='login'")
+                   window.location.replace("index.php")
                 } else {
                     console.log(data);
                     
